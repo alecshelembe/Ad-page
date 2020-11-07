@@ -23,6 +23,22 @@ function sanitizeString($var) {
 	return $var; 
 }
 
+function redirect_back() {
+	echo("<script type=\"text/javascript\">
+		window.history.go(-1);
+		</script>");
+}
+
+function confirm_match($var,$var2) {
+	if ($var !== $var2) {
+		echo("<script type=\"text/javascript\">
+			alert(\"Does not match.\");
+			</script>");
+		redirect_back();
+		die();
+	}
+}
+
 function please_login() {
 
 	echo("<script type=\"text/javascript\">
@@ -68,12 +84,6 @@ function info_exits() {
 	$location = "index.php";
 	go_to($location);
 	die();
-}
-
-function redirect_back() {
-	echo("<script type=\"text/javascript\">
-		window.history.go(-1);
-		</script>");
 }
 
 function check_if_empty($var) {
@@ -130,13 +140,9 @@ function check_if_exists($varconn,$dbname,$table,$row_title,$info){
 
 function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
-	// if ($row_title == "number") {
-	// 	check_if_exists($varconn,$dbname,$table,$row_title,$info);
-	// }
-
 	$query = "UPDATE `$table` SET `$row_title` = '$info' WHERE `$table`.`email` = '$email';";
 
-	// echo "$query";
+	 // echo "$query";
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
@@ -158,6 +164,8 @@ function create_user($varconn,$dbname,$table,$row_title,$info){
 	add_row($varconn,"proteas","accounts","sign_up_date","email");
 
 	add_row($varconn,"proteas","accounts","name","email");
+
+	add_row($varconn,"proteas","accounts","last_seen","email");
 
 	add_row($varconn,"proteas","accounts","login_times","email");
 
@@ -237,12 +245,17 @@ function pair_for_login($varconn,$table,$email,$email_info,$security_key,$securi
 		$name = $_SESSION['name'] = $row['name'];
 	}
 
-	$query = "UPDATE $table
-	SET `login_times` = '$login_times' WHERE $table.`email` = '$email_info';";
+	$dbname = "proteas";
 
-	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+	update_info($varconn,$dbname,$table,"login_times",$login_times,$email);
+
+	$datetime = date("Y-m-d H:i:s");
+
+	update_info($varconn,$dbname,$table,"last_seen",$datetime,$email);
 
 	setcookie("email","$email",time()+31556926 ,'/');
+
+	logged_in();
 
 	$location = "profile-page.php";
 	go_to($location);

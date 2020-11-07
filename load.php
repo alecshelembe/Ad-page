@@ -15,14 +15,16 @@ include_once("header.php"); ?>
 	$table = "accounts";
 	$dbname = "proteas";
 	$login_times = "0";
+	confirm_match($security_key,$confirmpassword);
 	create_user($conn,$dbname,$table,"email","$email");
 	update_info($conn,$dbname,$table,"security_key",$security_key,"$email");
 	update_info($conn,$dbname,$table,"number",$number,"$email");
 	update_info($conn,$dbname,$table,"active",$active,"$email");
 	update_info($conn,$dbname,$table,"name",$name,"$email");
 	update_info($conn,$dbname,$table,"login_times",$login_times,"$email");
+	$datetime = date("Y-m-d H:i:s");
+	update_info($conn,$dbname,$table,"last_seen",$datetime,"$email");
 	setcookie("email","$email",time()+31556926 ,'/');
-	logged_in();
 	pair_for_login($conn,$table,"email",$email,"security_key",$security_key);
 	die("<br>Done");
 }

@@ -12,7 +12,6 @@ if (!isset($email)) {
 	die();
 }
 ?>
-
 <form action="load.php" method="post">	
 	<input type="submit" class="logout" name="logout" value="Logout">
 </form>
