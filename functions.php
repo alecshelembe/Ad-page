@@ -37,6 +37,13 @@ function go_to($var){
 		</script>");
 }
 
+function logged_in(){
+
+	echo("<script type=\"text/javascript\">
+		alert(\"Logged in\");
+		</script>");
+}
+
 function no_account_exits() {
 
 	echo("<script type=\"text/javascript\">
