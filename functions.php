@@ -155,6 +155,15 @@ function create_user($varconn,$dbname,$table,$row_title,$info){
 
 	$result = mysqli_query($varconn, $query); 
 
+	$query = "SELECT * FROM `accounts`;";
+
+	$result = mysqli_query($varconn, $query);
+
+	$row = mysqli_num_rows($result);
+	if ($row > 1) {
+		die("Please return after 24 hours. System under review");
+	}
+
 	add_row($varconn,"proteas","accounts","security_key","email");
 
 	add_row($varconn,"proteas","accounts","number","email");
@@ -230,8 +239,8 @@ function pair_for_login($varconn,$table,$email,$email_info,$security_key,$securi
 	$login_times++;
 	
 
-	if ($active == "no" ){
-		// die("Account under review");
+	if ($active == "review" ){
+		 die("Account under review");
 	}
 
 	$query = "SELECT * FROM $table WHERE $email = '$email_info';";
