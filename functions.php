@@ -79,10 +79,9 @@ function wrongpassword() {
 function info_exits() {
 
 	echo("<script type=\"text/javascript\">
-		alert(\"Account details already in use.\");
+		alert(\"Already in use.\");
 		</script>");
-	$location = "index.php";
-	go_to($location);
+	redirect_back();
 	die();
 }
 
@@ -98,6 +97,32 @@ function message_information_missing() {
 	echo("<script type=\"text/javascript\">
 		alert(\"Information missing\");
 		</script>");
+}
+
+function image_size() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\" Image size too big\");
+		</script>");
+	redirect_back();
+	die();
+}
+
+function photo_format() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\" Please upload .jpeg/.gif/ .png/ .tif picture less than 2MB\");
+		</script>");
+	redirect_back();
+	die();
+}
+
+function saved() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\"Saved\");
+		</script>");
+	die();
 }
 
 function post_check($var){
@@ -116,7 +141,7 @@ function insert_info($varconn,$dbname,$table,$row_title,$info){
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
-	// echo "$query";
+	// die("$query");
 
 }
 
@@ -142,7 +167,7 @@ function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
 	$query = "UPDATE `$table` SET `$row_title` = '$info' WHERE `$table`.`email` = '$email';";
 
-	 // echo "$query";
+	   //die("$query");
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
@@ -277,4 +302,23 @@ function logout() {
 	$location = "index.php";
 	go_to($location);
 	die();
+}
+
+function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
+
+	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
+
+	//die("$query");
+
+	$result = mysqli_query($varconn, $query); 
+
+	check_if_exists($varconn,$dbname,$table,$row_title,$info);
+
+	insert_info($varconn,$dbname,$table,$row_title,$info);
+
+	add_row($varconn,"proteas","textbooks","school","email");
+	add_row($varconn,"proteas","textbooks","textbook_1_name","email");
+	add_row($varconn,"proteas","textbooks","textbook_1_photo","email");
+	add_row($varconn,"proteas","textbooks","textbook_1_subject","email");
+
 }
