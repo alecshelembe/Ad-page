@@ -1,9 +1,9 @@
 <?php
 // sever
 $dbsevername = "localhost";
-$dbusername = "root";
-$dbpassword = "";
-$dbname = "proteas";
+$dbusername = "id14954189_protea";
+$dbpassword = "REh2[L~gIUZ<$<lI";
+$dbname = "id14954189_proteas";
 
 $conn = mysqli_connect($dbsevername, $dbusername, $dbpassword);
 
@@ -46,6 +46,13 @@ function please_login() {
 		</script>");
 }
 
+function nothing() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\"Nothing here\");
+		</script>");
+}
+
 function go_to($var){
 
 	echo("<script type=\"text/javascript\">
@@ -79,7 +86,7 @@ function wrongpassword() {
 function info_exits() {
 
 	echo("<script type=\"text/javascript\">
-		alert(\"Already in use.\");
+		alert(\"The name of an input has already been used.\");
 		</script>");
 	redirect_back();
 	die();
@@ -178,14 +185,15 @@ function create_user($varconn,$dbname,$table,$row_title,$info){
 
 	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
-	$result = mysqli_query($varconn, $query); 
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn)); 
 
 	$query = "SELECT * FROM `accounts`;";
 
 	$result = mysqli_query($varconn, $query);
+	//die("$query");
 
 	$row = mysqli_num_rows($result);
-	if ($row > 1) {
+	if ($row > 50) {
 		die("Please return after 24 hours. System under review");
 	}
 
@@ -265,7 +273,7 @@ function pair_for_login($varconn,$table,$email,$email_info,$security_key,$securi
 	
 
 	if ($active == "review" ){
-		 die("Account under review");
+		die("Account under review");
 	}
 
 	$query = "SELECT * FROM $table WHERE $email = '$email_info';";
@@ -314,11 +322,133 @@ function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
 
 	check_if_exists($varconn,$dbname,$table,$row_title,$info);
 
+	check_if_exists($varconn,$dbname,$table,"ticket",$info);
+
 	insert_info($varconn,$dbname,$table,$row_title,$info);
 
 	add_row($varconn,"proteas","textbooks","school","email");
-	add_row($varconn,"proteas","textbooks","textbook_1_name","email");
-	add_row($varconn,"proteas","textbooks","textbook_1_photo","email");
-	add_row($varconn,"proteas","textbooks","textbook_1_subject","email");
+	add_row($varconn,"proteas","textbooks","textbook_name","email");
+	add_row($varconn,"proteas","textbooks","textbook_photo","email");
+	add_row($varconn,"proteas","textbooks","textbook_subject","email");
+	add_row($varconn,"proteas","textbooks","price","email");
+	add_row($varconn,"proteas","textbooks","location","email");
+	add_row($varconn,"proteas","textbooks","ticket","email");
+
+}
+
+function remove($varconn,$dbname,$table,$row_title,$info){
+
+	$query = "DELETE FROM `$table` WHERE `$table`.`$row_title` = '$info';";
+
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+
+	//die("$query");
+
+}
+
+function remove_photo($varconn,$dbname,$table,$row_title,$info){
+
+	$query = "SELECT `textbook_photo`,`textbook_subject` FROM `$table` WHERE `$row_title` = '$info';";
+
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+	
+	$row = mysqli_num_rows($result);
+	if ($row == 0) {
+		redirect_back();
+		nothing();
+		die();
+	}
+
+
+	while ($row = mysqli_fetch_assoc($result))
+	{ 
+		$textbook_subject = $row['textbook_subject'];
+		$textbook_photo = $row['textbook_photo'];
+	}
+
+	unlink("$textbook_subject/$textbook_photo");
+
+}
+
+function create_balance_profile($varconn,$dbname,$table,$row_title,$info){
+
+
+	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
+
+	//die("$query");
+
+	$result = mysqli_query($varconn, $query); 
+
+
+	$query = "SELECT * FROM $table WHERE $row_title = '$info';";
+
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+
+	$row = mysqli_num_rows($result);
+	if ($row == 1) {
+
+		$row = mysqli_fetch_assoc($result);
+		$amount = $row['amount'];
+		$coins = $row['coins'];
+
+		$answer = "R: $amount <br><br> Coins: $coins ";
+
+		return $answer;
+
+		die();
+		
+	}
+
+	check_if_exists($varconn,$dbname,$table,$row_title,$info);
+
+	insert_info($varconn,$dbname,$table,$row_title,$info);
+
+	add_row($varconn,"proteas","balance","amount","email");
+
+	add_row($varconn,"proteas","balance","coins","email");
+
+}
+
+function see_ad($varconn,$dbname,$table,$row_title,$info){
+
+	$email = $_SESSION['email'];
+
+	$query = "SELECT * FROM $table WHERE $row_title = '$info';";
+
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+
+	$row = mysqli_num_rows($result);
+	if ($row == 0) {
+		redirect_back();
+		nothing();
+		die();
+	}
+
+	$row = mysqli_fetch_assoc($result);
+	$email = $row['email'];
+	$ticket = $row['ticket'];
+	$location = $row['location'];
+	$price = $row['price'];
+	$textbook_subject = $row['textbook_subject'];
+	$textbook_photo = $row['textbook_photo'];
+	$textbook_name = $row['textbook_name'];
+	$school = $row['school'];
+	$price = $row['price'];
+
+	echo "<h5>School: $school</h5><br>";
+
+	echo "<h5>Name: $textbook_name</h5><br>";
+
+	echo "<h5>Price: $price</h5><br>";
+
+	echo "<h5>Meet at: $location</h5><br>";
+
+	echo "<h5>Ticket: $ticket</h5><br><br>";
+
+	echo "<div style=\"text-align: center;\">
+	<img src=\"$textbook_subject/$textbook_photo\" style=\"border-radius:5px;\" max width=\"300px\">
+	</div>";
+
+
 
 }

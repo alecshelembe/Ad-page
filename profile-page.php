@@ -16,7 +16,10 @@ if (!isset($email)) {
 <p>Upload details of the textbooks you would like to sell</p>
 <br>
 <hr>
-<br>
+
+<form action="load.php" method="post">	
+	<input type="submit" name="balance" value="Balance">
+</form>
 
 <form action="load.php"  method="post" enctype="multipart/form-data" />
 <label for="Subject">Select a subject</label>
@@ -25,10 +28,17 @@ if (!isset($email)) {
 	<option value="Math">Math</option>
 	<option value="English">English</option>
 </select>
+
 <br><br>
 <label for="School">Select a school</label>
 <select name="school">
 	<option value="Wits" selected>Wits</option>
+</select>
+
+<br><br>
+<label for="Location">Select a building </label>
+<select name="location">
+	<option value="Library" selected>Library</option>
 </select>
 <br><br>
 <input type="text" name="name_of_textbook" placeholder="Name of textbook"><br><br>
@@ -39,8 +49,18 @@ if (!isset($email)) {
 </form>
 
 <form action="load.php" method="post">	
+	<input type="submit" name="remove" value="Remove Upload">
+</form>
+
+<form action="load.php" method="post">	
+	<input type="submit" name="see_ad" value="See Ad">
+</form>
+
+<form action="load.php" method="post">	
 	<input type="submit" class="logout" name="logout" value="Logout">
 </form>
+
+
 <script type="text/javascript">
 	if ( window.history.replaceState ) {
 		window.history.replaceState( null, null, window.location.href );

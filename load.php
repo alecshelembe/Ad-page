@@ -49,10 +49,11 @@ if (isset($_POST['bookphoto'])) {
 
 	$booknumber = post_check("booknumber");
 	$school = post_check("school");
-	$name_of_book = post_check("name_of_textbook");
-	$subject = post_check("subject");
+	$textbook_name = post_check("name_of_textbook");
+	$textbook_subject = post_check("subject");
+	$location = post_check("location");
 
-	$dir = "$subject";
+	$dir = "$textbook_subject";
 
 	if( is_dir($dir) === false )
 	{
@@ -105,6 +106,32 @@ if (isset($_POST['bookphoto'])) {
 		
 		create_textbook_profile($conn,$dbname,$table,$row_title,$email);
 
+		$table = "textbooks";
+		$row_title = "textbook_photo";
+
+		check_if_exists($conn,$dbname,$table,$row_title,$email);
+
+		/////////////////////////////////// valuse changed
+		$table = "textbooks";
+		$row_title = "email";
+
+		$ticket = rand(1,9999999);
+
+
+		update_info($conn,$dbname,$table,"textbook_subject",$textbook_subject,"$email");
+
+		update_info($conn,$dbname,$table,"textbook_photo",$name_of_picture,"$email");
+
+		update_info($conn,$dbname,$table,"textbook_name",$textbook_name,"$email");
+
+		update_info($conn,$dbname,$table,"school",$school,"$email");
+
+		update_info($conn,$dbname,$table,"price",'R400',"$email");
+
+		update_info($conn,$dbname,$table,"location",$location,"$email");
+
+		update_info($conn,$dbname,$table,"ticket",$ticket,"$email");
+
 		move_uploaded_file($file_tem_loc, $file_store);
 
 	}
@@ -118,5 +145,57 @@ if (isset($_POST['bookphoto'])) {
 	saved();
 	die("Done");
 }
+
+if (isset($_POST['remove'])) {
+
+	$email = $_SESSION['email'];
+
+	remove_photo($conn,$dbname,"textbooks","email",$email);
+
+	remove($conn,"proteas","textbooks","email",$email);
+
+	redirect_back();
+	saved();
+
+	die("Done");
+}
+
+if (isset($_POST['balance'])) {
+
+	$email = $_SESSION['email'];
+
+	$table = "balance";
+	$row_title = "email";
+	$dbname = "proteas";
+	$answer = create_balance_profile($conn,$dbname,$table,$row_title,$email);
+
+	if (isset($answer)) {
+		die("$answer");
+	}
+
+	update_info($conn,$dbname,$table,"amount",'0',"$email");
+
+	update_info($conn,$dbname,$table,"coins",'0',"$email");
+
+
+	redirect_back();
+	saved();
+
+	die("Done");
+
+}
+
+if (isset($_POST['see_ad'])) {
+
+	$email = $_SESSION['email'];	
+
+	$table = "textbooks";
+	$row_title = "email";
+	$dbname = "proteas";
+
+	see_ad($conn,$dbname,$table,$row_title,$email);
+
+
+	}
 
 include_once("footer.php"); 
