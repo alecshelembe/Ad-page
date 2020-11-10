@@ -1,5 +1,5 @@
 	<footer>
-		<p>&copy; Proteas</p>
+		<p>&copy;</p>
 	</footer>
 	<br>
 	<br>

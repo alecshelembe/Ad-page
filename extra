@@ -1,1 +1,24 @@
 REh2[L~gIUZ<$<lI
+id14954189_protea
+
+<?php
+// sever
+$dbsevername = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "proteas";
+
+<?php
+// sever
+$dbsevername = "localhost";
+$dbusername = "id14954189_protea";
+$dbpassword = "REh2[L~gIUZ<$<lI";
+$dbname = "id14954189_proteas";
+
+setting default value 
+/////////////////////////////////
+ALTER TABLE `accounts` CHANGE `email` `email` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `login_times` `login_times` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `last_seen` `last_seen` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `name` `name` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `sign_up_date` `sign_up_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CHANGE `active` `active` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `number` `number` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `security_key` `security_key` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
+/////////////////////////////////
+ALTER TABLE `textbooks` CHANGE `email` `email` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `ticket` `ticket` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `location` `location` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `price` `price` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `textbook_subject` `textbook_subject` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `textbook_photo` `textbook_photo` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `textbook_name` `textbook_name` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, CHANGE `school` `school` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
+/////////////////////////////////
+ALTER TABLE `balance` CHANGE `email` `email` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `coins` `coins` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `amount` `amount` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;

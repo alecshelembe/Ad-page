@@ -1,9 +1,9 @@
 <?php
 // sever
 $dbsevername = "localhost";
-$dbusername = "id14954189_protea";
-$dbpassword = "REh2[L~gIUZ<$<lI";
-$dbname = "id14954189_proteas";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "proteas";
 
 $conn = mysqli_connect($dbsevername, $dbusername, $dbpassword);
 
@@ -183,17 +183,16 @@ function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
 function create_user($varconn,$dbname,$table,$row_title,$info){
 
-	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
+	//$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
-	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn)); 
+	//$result = mysqli_query($varconn, $query); 
 
 	$query = "SELECT * FROM `accounts`;";
 
 	$result = mysqli_query($varconn, $query);
-	//die("$query");
 
 	$row = mysqli_num_rows($result);
-	if ($row > 50) {
+	if ($row > 30) {
 		die("Please return after 24 hours. System under review");
 	}
 
@@ -321,8 +320,6 @@ function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
 	$result = mysqli_query($varconn, $query); 
 
 	check_if_exists($varconn,$dbname,$table,$row_title,$info);
-
-	check_if_exists($varconn,$dbname,$table,"ticket",$info);
 
 	insert_info($varconn,$dbname,$table,$row_title,$info);
 

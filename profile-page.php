@@ -1,9 +1,10 @@
-<?php include_once("header.php"); ?>
+<?php 
+session_start();
+include_once("header.php"); ?>
 
 <?php include_once("functions.php"); ?>
 
 <?php 
-session_start();
 $email = $_SESSION['email'];
 if (!isset($email)) {
 	please_login();
