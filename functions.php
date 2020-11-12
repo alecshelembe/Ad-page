@@ -9,6 +9,10 @@ $conn = mysqli_connect($dbsevername, $dbusername, $dbpassword);
 
 mysqli_select_db($conn, $dbname);
 
+function cancel(){
+	die();
+}
+
 function sanitizeString($var) {    
 	if (get_magic_quotes_gpc())
 
@@ -17,7 +21,7 @@ function sanitizeString($var) {
 	$var = strip_tags($var); 
 
 	if (strlen($var) > 400 ) {
-		die("Charachter break fatal error"); 
+		cancel("Charachter break fatal error"); 
 	}
 	$var = addslashes($var);
 	return $var; 
@@ -29,13 +33,14 @@ function redirect_back() {
 		</script>");
 }
 
+
 function confirm_match($var,$var2) {
 	if ($var !== $var2) {
 		echo("<script type=\"text/javascript\">
 			alert(\"Does not match.\");
 			</script>");
 		redirect_back();
-		die();
+		cancel();
 	}
 }
 
@@ -89,14 +94,14 @@ function info_exits() {
 		alert(\"The name of an input has already been used.\");
 		</script>");
 	redirect_back();
-	die();
+	cancel();
 }
 
 function check_if_empty($var) {
 	if (empty($var)) {
 		message_information_missing();
 		redirect_back();
-		die();
+		cancel();
 	}
 }
 
@@ -112,7 +117,7 @@ function image_size() {
 		alert(\" Image size too big\");
 		</script>");
 	redirect_back();
-	die();
+	cancel();
 }
 
 function photo_format() {
@@ -121,7 +126,7 @@ function photo_format() {
 		alert(\" Please upload .jpeg/.gif/ .png/ .tif picture less than 2MB\");
 		</script>");
 	redirect_back();
-	die();
+	cancel();
 }
 
 function saved() {
@@ -129,13 +134,13 @@ function saved() {
 	echo("<script type=\"text/javascript\">
 		alert(\"Saved\");
 		</script>");
-	die();
+	cancel();
 }
 
 function post_check($var){
 	if (!isset($_POST[$var])) {
 		message_information_missing();
-		die("$var not found");
+		cancel("$var not found");
 	}
 	$var = sanitizeString($_POST[$var]);
 	check_if_empty($var);
@@ -148,7 +153,7 @@ function insert_info($varconn,$dbname,$table,$row_title,$info){
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
-	// die("$query");
+	// cancel("$query");
 
 }
 
@@ -163,7 +168,7 @@ function check_if_exists($varconn,$dbname,$table,$row_title,$info){
 	$row = mysqli_num_rows($result);
 	if ($row > 0) {
 		info_exits();
-		die();
+		cancel();
 	}
 
 
@@ -174,7 +179,7 @@ function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
 	$query = "UPDATE `$table` SET `$row_title` = '$info' WHERE `$table`.`email` = '$email';";
 
-	   //die("$query");
+	   //cancel("$query");
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
@@ -193,7 +198,7 @@ function create_user($varconn,$dbname,$table,$row_title,$info){
 
 	$row = mysqli_num_rows($result);
 	if ($row > 30) {
-		die("Please return after 24 hours. System under review");
+		cancel("Please return after 24 hours. System under review");
 	}
 
 	add_row($varconn,"proteas","accounts","security_key","email");
@@ -272,7 +277,7 @@ function pair_for_login($varconn,$table,$email,$email_info,$security_key,$securi
 	
 
 	if ($active == "review" ){
-		die("Account under review");
+		cancel("Account under review");
 	}
 
 	$query = "SELECT * FROM $table WHERE $email = '$email_info';";
@@ -300,7 +305,7 @@ function pair_for_login($varconn,$table,$email,$email_info,$security_key,$securi
 
 	$location = "profile-page.php";
 	go_to($location);
-	die();
+	cancel();
 
 }
 
@@ -308,14 +313,14 @@ function logout() {
 	session_destroy();
 	$location = "index.php";
 	go_to($location);
-	die();
+	cancel();
 }
 
 function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
 
 	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
-	//die("$query");
+	//cancel("$query");
 
 	$result = mysqli_query($varconn, $query); 
 
@@ -339,7 +344,7 @@ function remove($varconn,$dbname,$table,$row_title,$info){
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 
-	//die("$query");
+	//cancel("$query");
 
 }
 
@@ -353,7 +358,7 @@ function remove_photo($varconn,$dbname,$table,$row_title,$info){
 	if ($row == 0) {
 		redirect_back();
 		nothing();
-		die();
+		cancel();
 	}
 
 
@@ -372,7 +377,7 @@ function create_balance_profile($varconn,$dbname,$table,$row_title,$info){
 
 	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
-	//die("$query");
+	//cancel("$query");
 
 	$result = mysqli_query($varconn, $query); 
 
@@ -392,7 +397,7 @@ function create_balance_profile($varconn,$dbname,$table,$row_title,$info){
 
 		return $answer;
 
-		die();
+		cancel();
 		
 	}
 
@@ -418,7 +423,7 @@ function see_ad($varconn,$dbname,$table,$row_title,$info){
 	if ($row == 0) {
 		redirect_back();
 		nothing();
-		die();
+		cancel();
 	}
 
 	$row = mysqli_fetch_assoc($result);

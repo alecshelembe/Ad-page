@@ -26,7 +26,7 @@ include_once("header.php"); ?>
 	update_info($conn,$dbname,$table,"last_seen",$datetime,"$email");
 	setcookie("email","$email",time()+31556926 ,'/');
 	pair_for_login($conn,$table,"email",$email,"security_key",$security_key);
-	die("<br>Done");
+	cancel("<br>Done");
 }
 
 if (isset($_POST['login'])) {
@@ -36,7 +36,7 @@ if (isset($_POST['login'])) {
 	$table = "accounts";
 	pair_for_login($conn,$table,"email",$email,"security_key",$security_key);
 
-	die("<br>Done");
+	cancel("<br>Done");
 }
 
 if (isset($_POST['logout'])) {
@@ -68,7 +68,7 @@ if (isset($_POST['bookphoto'])) {
 
 	if($_FILES["picture"]["size"] > 2000000) {
 		image_size();
-		die();
+		cancel();
 	}
 
 	switch($_FILES['picture']['type'])
@@ -87,7 +87,7 @@ if (isset($_POST['bookphoto'])) {
 		case 'image/TIFF': $extention = 'tif'; break;
 		default:	
 		photo_format();
-		die();	 		  
+		cancel();	 		  
 
 	} 
 
@@ -138,12 +138,12 @@ if (isset($_POST['bookphoto'])) {
 	else
 	{
 		echo ("Something went wrong in Uploading your profile picture. Try a different one.");
-		die();	 		  
+		cancel();	 		  
 	} 	
 
 	redirect_back();
 	saved();
-	die("Done");
+	cancel("Done");
 }
 
 if (isset($_POST['remove'])) {
@@ -157,7 +157,7 @@ if (isset($_POST['remove'])) {
 	redirect_back();
 	saved();
 
-	die("Done");
+	cancel("Done");
 }
 
 if (isset($_POST['balance'])) {
@@ -170,7 +170,8 @@ if (isset($_POST['balance'])) {
 	$answer = create_balance_profile($conn,$dbname,$table,$row_title,$email);
 
 	if (isset($answer)) {
-		die("$answer");
+		echo("$answer");
+		cancel("$answer");
 	}
 
 	update_info($conn,$dbname,$table,"amount",'0',"$email");
@@ -181,7 +182,7 @@ if (isset($_POST['balance'])) {
 	redirect_back();
 	saved();
 
-	die("Done");
+	cancel("Done");
 
 }
 
