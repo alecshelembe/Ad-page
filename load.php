@@ -43,17 +43,17 @@ if (isset($_POST['logout'])) {
 	logout();
 }
 
-if (isset($_POST['bookphoto'])) {
+if (isset($_POST['productphoto'])) {
 
 	$email = $_SESSION['email'];
 
 	$booknumber = post_check("booknumber");
-	$school = post_check("school");
-	$textbook_name = post_check("name_of_textbook");
-	$textbook_subject = post_check("subject");
+	$name = post_check("name_of_product");
+	$catagory = post_check("catagory");
 	$location = post_check("location");
+	$price = post_check("price");
 
-	$dir = "$textbook_subject";
+	$dir = "$catagory";
 
 	if( is_dir($dir) === false )
 	{
@@ -100,33 +100,31 @@ if (isset($_POST['bookphoto'])) {
 
 		$file_store = "$dir/$name_of_picture";
 
-		$table = "textbooks";
+		$table = "products";
 		$row_title = "email";
 		$dbname = "proteas";
 		
-		create_textbook_profile($conn,$dbname,$table,$row_title,$email);
+		create_product_profile($conn,$dbname,$table,$row_title,$email);
 
-		$table = "textbooks";
-		$row_title = "textbook_photo";
+		$table = "products";
+		$row_title = "photo";
 
 		check_if_exists($conn,$dbname,$table,$row_title,$email);
 
 		/////////////////////////////////// valuse changed
-		$table = "textbooks";
+		$table = "products";
 		$row_title = "email";
 
 		$ticket = rand(1,9999999);
 
 
-		update_info($conn,$dbname,$table,"textbook_subject",$textbook_subject,"$email");
+		update_info($conn,$dbname,$table,"catagory",$catagory,"$email");
 
-		update_info($conn,$dbname,$table,"textbook_photo",$name_of_picture,"$email");
+		update_info($conn,$dbname,$table,"photo",$name_of_picture,"$email");
 
-		update_info($conn,$dbname,$table,"textbook_name",$textbook_name,"$email");
+		update_info($conn,$dbname,$table,"name",$name,"$email");
 
-		update_info($conn,$dbname,$table,"school",$school,"$email");
-
-		update_info($conn,$dbname,$table,"price",'R400',"$email");
+		update_info($conn,$dbname,$table,"price","$price","$email");
 
 		update_info($conn,$dbname,$table,"location",$location,"$email");
 
@@ -150,9 +148,9 @@ if (isset($_POST['remove'])) {
 
 	$email = $_SESSION['email'];
 
-	remove_photo($conn,$dbname,"textbooks","email",$email);
+	remove_photo($conn,$dbname,"products","email",$email);
 
-	remove($conn,"proteas","textbooks","email",$email);
+	remove($conn,"proteas","products","email",$email);
 
 	redirect_back();
 	saved();
@@ -190,7 +188,7 @@ if (isset($_POST['see_ad'])) {
 
 	$email = $_SESSION['email'];	
 
-	$table = "textbooks";
+	$table = "products";
 	$row_title = "email";
 	$dbname = "proteas";
 

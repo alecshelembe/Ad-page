@@ -316,7 +316,7 @@ function logout() {
 	cancel();
 }
 
-function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
+function create_product_profile($varconn,$dbname,$table,$row_title,$info){
 
 	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
@@ -328,13 +328,12 @@ function create_textbook_profile($varconn,$dbname,$table,$row_title,$info){
 
 	insert_info($varconn,$dbname,$table,$row_title,$info);
 
-	add_row($varconn,"proteas","textbooks","school","email");
-	add_row($varconn,"proteas","textbooks","textbook_name","email");
-	add_row($varconn,"proteas","textbooks","textbook_photo","email");
-	add_row($varconn,"proteas","textbooks","textbook_subject","email");
-	add_row($varconn,"proteas","textbooks","price","email");
-	add_row($varconn,"proteas","textbooks","location","email");
-	add_row($varconn,"proteas","textbooks","ticket","email");
+	add_row($varconn,"proteas","products","name","email");
+	add_row($varconn,"proteas","products","photo","email");
+	add_row($varconn,"proteas","products","catagory","email");
+	add_row($varconn,"proteas","products","price","email");
+	add_row($varconn,"proteas","products","location","email");
+	add_row($varconn,"proteas","products","ticket","email");
 
 }
 
@@ -350,7 +349,7 @@ function remove($varconn,$dbname,$table,$row_title,$info){
 
 function remove_photo($varconn,$dbname,$table,$row_title,$info){
 
-	$query = "SELECT `textbook_photo`,`textbook_subject` FROM `$table` WHERE `$row_title` = '$info';";
+	$query = "SELECT `photo`,`catagory` FROM `$table` WHERE `$row_title` = '$info';";
 
 	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
 	
@@ -364,11 +363,11 @@ function remove_photo($varconn,$dbname,$table,$row_title,$info){
 
 	while ($row = mysqli_fetch_assoc($result))
 	{ 
-		$textbook_subject = $row['textbook_subject'];
-		$textbook_photo = $row['textbook_photo'];
+		$catagory = $row['catagory'];
+		$photo = $row['photo'];
 	}
 
-	unlink("$textbook_subject/$textbook_photo");
+	unlink("$catagory/$photo");
 
 }
 
@@ -431,24 +430,21 @@ function see_ad($varconn,$dbname,$table,$row_title,$info){
 	$ticket = $row['ticket'];
 	$location = $row['location'];
 	$price = $row['price'];
-	$textbook_subject = $row['textbook_subject'];
-	$textbook_photo = $row['textbook_photo'];
-	$textbook_name = $row['textbook_name'];
-	$school = $row['school'];
+	$catagory = $row['catagory'];
+	$photo = $row['photo'];
+	$name = $row['name'];
 	$price = $row['price'];
 
-	echo "<h5>School: $school</h5><br>";
-
-	echo "<h5>Name: $textbook_name</h5><br>";
+	echo "<h5>Name: $name</h5><br>";
 
 	echo "<h5>Price: $price</h5><br>";
 
-	echo "<h5>Meet at: $location</h5><br>";
+	echo "<h5>Address: $location</h5><br>";
 
 	echo "<h5>Ticket: $ticket</h5><br><br>";
 
 	echo "<div style=\"text-align: center;\">
-	<img src=\"$textbook_subject/$textbook_photo\" style=\"border-radius:5px;\" max width=\"300px\">
+	<img src=\"$catagory/$photo\" style=\"border-radius:5px;\" max width=\"300px\">
 	</div>";
 
 

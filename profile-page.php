@@ -14,7 +14,7 @@ if (!isset($email)) {
 }
 ?>
 
-<p>Upload details of the textbooks you would like to sell</p>
+<p>Upload information about the product you would like to sell</p>
 <br>
 <hr>
 
@@ -23,30 +23,26 @@ if (!isset($email)) {
 </form>
 
 <form action="load.php"  method="post" enctype="multipart/form-data" />
-<label for="Subject">Select a subject</label>
-<select name="subject">
+<label for="catagory">Select a catagory</label>
+<select name="catagory">
 	<option value="" selected>None</option>
-	<option value="Math">Math</option>
-	<option value="English">English</option>
+	<option value="Clothing">Clothing</option>
 </select>
 
 <br><br>
-<label for="School">Select a school</label>
-<select name="school">
-	<option value="Wits" selected>Wits</option>
-</select>
+<label for="Location"></label>
+<input type="text" name="location" placeholder="Address">
+<br><br>
 
+<label for="Price"></label>
+<input type="text" name="price" placeholder="Price">
 <br><br>
-<label for="Location">Select a building </label>
-<select name="location">
-	<option value="Library" selected>Library</option>
-</select>
-<br><br>
-<input type="text" name="name_of_textbook" placeholder="Name of textbook"><br><br>
+
+<input type="text" name="name_of_product" placeholder="Name of product"><br><br>
 <label for="Picture"><span>photo</span></label>
 <input type="file" name="picture" accept="image/*"><br><br>
 <input type="text" name="booknumber" value="1" hidden>
-<input type="submit" value="Upload" name="bookphoto">
+<input type="submit" value="Upload" name="productphoto">
 </form>
 
 <form action="load.php" method="post">	
