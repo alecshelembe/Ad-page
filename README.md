@@ -2,8 +2,10 @@
 
 Pro code my best work yet.
 
-Database settings at top of functions page add database proteas
+Read line by line to understand the flow of the website and functions start at index.php
 
-Developed by Alec Shelembe. not for commercial use.
+Database settings at top of functions page, add database "proteas"
+
+Developed by Alec Shelembe. Not suitable for commercial use.
 
 I am amazed at the number of pages that are used to run this site.
