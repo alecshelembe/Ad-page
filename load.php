@@ -195,6 +195,61 @@ if (isset($_POST['see_ad'])) {
 	see_ad($conn,$dbname,$table,$row_title,$email);
 
 
-	}
+}
+
+if (isset($_POST['send'])) {
+
+	//////////////////// Feature not complete
+
+	$email_info = $_SESSION['email'];
+
+	$send_coins = post_check("send_coins");
+	$send_email = post_check("send_email");	
+
+	$table = "balance";
+	$email = "email";
+	$row_title = "email";
+	$dbname = "proteas";
+
+	same($send_email,$email_info);
+
+	check_if_exists_yes($conn,$dbname,$table,$row_title,$send_email);
+
+	$query = "SELECT * FROM $table WHERE $email = '$email_info';";
+
+	$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+
+	$row = mysqli_fetch_assoc($result);
+	$mycoins = $row['coins'];
+
+	/////////////////////////////////////////
+
+	$query = "SELECT * FROM $table WHERE $email = '$send_email';";
+
+	$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+
+	$row = mysqli_fetch_assoc($result);
+	$coins = $row['coins'];
+	
+
+	if ($mycoins >= $send_coins) {
+		$mycoins = $mycoins - $send_coins;
+		$coins = $coins + $send_coins;
+
+		} else {
+			insufficient_funds();
+			redirect_back();
+			cancel();
+		}
+
+	update_info($conn,$dbname,'balance',"coins",$mycoins,"$email_info");
+
+	update_info($conn,$dbname,'balance',"coins",$coins,"$send_email");
+
+	success();
+	redirect_back();
+	cancel();
+
+}
 
 include_once("footer.php"); 

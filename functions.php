@@ -44,6 +44,16 @@ function confirm_match($var,$var2) {
 	}
 }
 
+function same($var,$var2) {
+	if ($var == $var2) {
+		echo("<script type=\"text/javascript\">
+			alert(\"Same information\");
+			</script>");
+		redirect_back();
+		cancel();
+	}
+}
+
 function please_login() {
 
 	echo("<script type=\"text/javascript\">
@@ -55,6 +65,20 @@ function nothing() {
 
 	echo("<script type=\"text/javascript\">
 		alert(\"Nothing here\");
+		</script>");
+}
+
+function success() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\"Success\");
+		</script>");
+}
+
+function insufficient_funds() {
+
+	echo("<script type=\"text/javascript\">
+		alert(\"insufficient funds\");
 		</script>");
 }
 
@@ -91,7 +115,7 @@ function wrongpassword() {
 function info_exits() {
 
 	echo("<script type=\"text/javascript\">
-		alert(\"The name of an input has already been used.\");
+		alert(\"Duplicate information\");
 		</script>");
 	redirect_back();
 	cancel();
@@ -174,6 +198,24 @@ function check_if_exists($varconn,$dbname,$table,$row_title,$info){
 
 }
 
+function check_if_exists_yes($varconn,$dbname,$table,$row_title,$info){
+
+	$query = "SELECT `$row_title` FROM `$table` WHERE `$row_title` = '$info';";
+
+	// echo "$query";
+
+	$result = mysqli_query($varconn, $query) or die(mysqli_error($varconn));
+
+	$row = mysqli_num_rows($result);
+	if ($row != 1) {
+		no_account_exits();
+		redirect_back();
+		cancel();
+	}
+
+
+}
+
 
 function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
@@ -188,9 +230,9 @@ function update_info($varconn,$dbname,$table,$row_title,$info,$email){
 
 function create_user($varconn,$dbname,$table,$row_title,$info){
 
-	//$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
+	$query = "CREATE TABLE `$dbname`.`$table` ( `$row_title` VARCHAR(200) NOT NULL ) ENGINE = InnoDB;";
 
-	//$result = mysqli_query($varconn, $query); 
+	$result = mysqli_query($varconn, $query); 
 
 	$query = "SELECT * FROM `accounts`;";
 
@@ -389,10 +431,9 @@ function create_balance_profile($varconn,$dbname,$table,$row_title,$info){
 	if ($row == 1) {
 
 		$row = mysqli_fetch_assoc($result);
-		$amount = $row['amount'];
 		$coins = $row['coins'];
 
-		$answer = "R: $amount <br><br> Coins: $coins ";
+		$answer = "Coins: $coins ";
 
 		return $answer;
 

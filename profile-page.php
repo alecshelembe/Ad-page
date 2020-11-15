@@ -53,6 +53,15 @@ if (!isset($email)) {
 	<input type="submit" name="see_ad" value="See Ad">
 </form>
 
+<hr>
+<br>
+<p>Transact</p>
+<form action ="load.php" method="post">
+	<input type="text" name="send_email" placeholder = "Send to email">
+	<input type="text" name="send_coins" placeholder = "Amount">
+	<input type="submit" name="send" value ="send">
+</form>
+
 <form action="load.php" method="post">	
 	<input type="submit" class="logout" name="logout" value="Logout">
 </form>
