@@ -6,8 +6,8 @@ Read line by line to understand the flow of the website and functions start at i
 
 Database settings at top of functions page, add database "proteas"
 
-Developed by Alec Shelembe. Not suitable for commercial use.
+Developed by Alec Shelembe. Not suitable for commercial use. 
 
-I am amazed at the number of pages that are used to run this site.
+This site has been deployed on a live server
 
 Link - https://cunning-quota.000webhostapp.com/
