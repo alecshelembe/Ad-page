@@ -10,4 +10,6 @@ Developed by Alec Shelembe. Not suitable for commercial use.
 
 This site has been deployed on a live server
 
+You will need XAMPP, phpmyadmin and a browser
+
 Link - https://cunning-quota.000webhostapp.com/
