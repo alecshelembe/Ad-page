@@ -1,7 +1,5 @@
 # Read-line-by-line
 
-Pro code my best work yet.
-
 Read line by line to understand the flow of the website and functions start at index.php
 
 Database settings at top of functions page, add database "proteas"
