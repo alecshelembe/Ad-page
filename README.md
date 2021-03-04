@@ -10,4 +10,4 @@ This site has been deployed on a live server
 
 You will need XAMPP, phpmyadmin and a browser
 
-Link - https://cunning-quota.000webhostapp.com/
+Link - https://square-rigged-paper.000webhostapp.com/
